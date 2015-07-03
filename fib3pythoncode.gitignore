@@ -1,0 +1,26 @@
+
+
+CACHE = {}
+BLOCK_SIZE = 500
+
+def fib3_base(n):
+    # retrieve from cache if previously computed
+    if n in CACHE: return CACHE[n]
+    if n <= 3: ans = 1
+    else: ans = fib3_base(n-1) + fib3_base(n-2) + fib3_base(n-3)
+    # store ans in cache to avoid recalculating the same thing again
+    CACHE[n] = ans
+    return ans
+
+def fib3(n):
+    if n in CACHE: return CACHE[n]
+    #compute the sequence of large numbers in smaller blocks
+    # to avoid exceeding max recursion depth
+    block = BLOCK_SIZE
+    while block < n:
+        fib3_base(block)
+        block += BLOCK_SIZE
+    return fib3_base(n)
+
+
+#print(fib3(4000))
